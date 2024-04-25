@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loyalty Card for Castor Oil</title>
     <style>
+        /* Your CSS styles here */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -87,6 +88,19 @@
             color: #3b5998; /* Facebook blue color */
             text-decoration: none;
         }
+        .reset-button {
+            margin-top: 20px;
+            background-color: #fff;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .reset-button:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
@@ -101,6 +115,7 @@
             <div class="loyalty-circle" id="circle-6">6</div>
             <div class="loyalty-circle" id="claim-prize" data-tooltip="Click to claim prize">7</div>
         </div>
+        <button class="reset-button" onclick="resetRecords()">Reset</button>
         <a href="https://www.facebook.com/SalonBlackPnk?mibextid=LQQJ4d" class="facebook-link">
             Visit Our Facebook Page
         </a>
@@ -129,7 +144,7 @@
             } else {
                 circle.addEventListener('click', () => {
                     if (Object.keys(dateRecord).length === 6) {
-                        circle.innerHTML = '🎉🥳';
+                        circle.innerHTML = '😮';
                         circle.setAttribute('data-tooltip', 'Claim your Prize 1 Castor Oil');
                     }
                 });
@@ -142,6 +157,14 @@
                 circles[index].classList.add('active');
                 circles[index].setAttribute('data-tooltip', `Bought (${dateRecord[key]})`);
             });
+        }
+
+        function resetRecords() {
+            if (confirm('Are you sure you want to reset all records?')) {
+                localStorage.removeItem('dateRecord');
+                dateRecord = {};
+                updateCircles();
+            }
         }
     </script>
 </body>
