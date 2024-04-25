@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loyalty Card for Castor Oil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            color: #fff; /* Set text color to white for better visibility */
+            background-image: url('https://images.unsplash.com/photo-1550159793-ecaa76eaffde?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+        }
+        h1 {
+            color: #fff; /* Set text color to white for better visibility */
+        }
+        .loyalty-card {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background color for better readability */
+            border-radius: 10px; /* Adjust the border-radius to match the container */
+            padding: 20px; /* Add padding to match the container */
+        }
+        .loyalty-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: transparent; /* Transparent background initially */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #fff;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Emboss effect */
+        }
+        .loyalty-circle.active {
+            background-color: #ff69b4; /* Pink color when marked as "bought" */
+        }
+        .loyalty-circle:nth-child(n+2) {
+            opacity: 1; /* Set opacity to fully visible */
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add shadow to increase visibility */
+        }
+        .loyalty-circle::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #333;
+            background-color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .loyalty-circle:hover::after {
+            display: block;
+        }
+        .loyalty-card-title {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .loyalty-card-title img {
+            width: 50px;
+            height: 50px;
+            vertical-align: middle;
+        }
+        .reset-button {
+            margin-top: 20px;
+            background-color: #fff;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .reset-button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Loyalty Card for Castor Oil</h1>
+        <div class="loyalty-card">
+            <div class="loyalty-circle" id="circle-1" data-tooltip="Click to mark as bought">1</div>
+            <div class="loyalty-circle" id="circle-2">2</div>
+            <div class="loyalty-circle" id="circle-3">3</div>
+            <div class="loyalty-circle" id="circle-4">4</div>
+            <div class="loyalty-circle" id="circle-5">5</div>
+            <div class="loyalty-circle" id="circle-6">6</div>
+            <div class="loyalty-circle" id="claim-prize" data-tooltip="Click to claim prize">7</div>
+        </div>
+        <button class="reset-button" onclick="resetRecords()">Reset</button>
+    </div>
+    <script>
+        const circles = document.querySelectorAll('.loyalty-circle');
+        const dateRecord = JSON.parse(localStorage.getItem('dateRecord')) || {};
+
+        updateCircles();
+
+        circles.forEach((circle, index) => {
+            if (index < 6) {
+                circle.addEventListener('click', () => {
+                    const password = prompt('Please enter the password to mark as bought:');
+                    if (password === 'your_password') { // Replace 'your_password' with your actual password
+                        circle.classList.add('active');
+                        circle.setAttribute('data-tooltip', `Bought (${getCurrentDate()})`);
+                        dateRecord[`circle-${index + 1}`] = getCurrentDate();
+                        localStorage.setItem('dateRecord', JSON.stringify(dateRecord));
+                    } else {
+                        alert('Incorrect password. You are not authorized to mark as bought.');
+                    }
+                });
+            } else {
+                circle.addEventListener('click', () => {
+                    circle.textContent = 'Claim your Prize: 1 Castor Oil';
+                    circle.setAttribute('data-tooltip', 'Congratulations!');
+                    circle.removeEventListener('click', null);
+                    circle.addEventListener('click', () => {
+                        circle.textContent = '🎉🥳';
+                    });
+                });
+            }
+        });
+
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function resetRecords() {
+            localStorage.removeItem('dateRecord');
+            dateRecord = {};
+            updateCircles();
+        }
+
+        function updateCircles() {
+            Object.keys(dateRecord).forEach(key => {
+                const index = parseInt(key.split('-')[1]) - 1;
+                circles[index].classList.add('active');
+                circles[index].setAttribute('data-tooltip', `Bought (${dateRecord[key]})`);
+            });
+        }
+    </script>
+</body>
+</html>
