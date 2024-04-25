@@ -146,9 +146,15 @@
                     if (Object.keys(dateRecord).length === 6) {
                         circle.innerHTML = '🥳';
                         circle.setAttribute('data-tooltip', 'Congratulations! Claim your Prize');
+                        setTimeout(() => {
+                            circle.setAttribute('data-tooltip', 'Click to claim prize');
+                        }, 5000); // Reset the tooltip text after 5 seconds (5000 milliseconds)
                     } else {
                         circle.innerHTML = '😢';
                         circle.setAttribute('data-tooltip', 'Complete all circles to claim prize');
+                        setTimeout(() => {
+                            circle.setAttribute('data-tooltip', 'Click to claim prize');
+                        }, 5000); // Reset the tooltip text after 5 seconds (5000 milliseconds)
                     }
                 });
             }
