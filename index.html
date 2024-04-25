@@ -131,7 +131,7 @@
                 circle.addEventListener('click', () => {
                     if (!circle.classList.contains('active')) {
                         const password = prompt('Please enter the password to mark as bought:');
-                        if (password === '123987') {
+                        if (password === 'newpassword') {
                             const date = new Date().toLocaleDateString();
                             dateRecord[`circle-${index + 1}`] = date;
                             localStorage.setItem('dateRecord', JSON.stringify(dateRecord));
