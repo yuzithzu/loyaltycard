@@ -84,27 +84,8 @@
         .facebook-link {
             display: block;
             margin-top: 20px;
-            color: #fff;
+            color: #3b5998; /* Facebook blue color */
             text-decoration: none;
-        }
-        .facebook-link img {
-            width: 30px;
-            height: 30px;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-        .reset-button {
-            margin-top: 20px;
-            background-color: #fff;
-            color: #333;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .reset-button:hover {
-            background-color: #ddd;
         }
     </style>
 </head>
@@ -120,9 +101,8 @@
             <div class="loyalty-circle" id="circle-6">6</div>
             <div class="loyalty-circle" id="claim-prize" data-tooltip="Click to claim prize">7</div>
         </div>
-        <button class="reset-button" onclick="resetRecords()">Reset</button>
         <a href="https://www.facebook.com/SalonBlackPnk?mibextid=LQQJ4d" class="facebook-link">
-            <img src="https://scontent-mia3-2.xx.fbcdn.net/v/t1.6435-1/cp0/c0.10.50.50a/p50x50/241333071_393993092732223_2973754520118672321_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=dbb9e7&_nc_ohc=HweyA03IxikAX9VkR8s&_nc_ht=scontent-mia3-2.xx&edm=AMKDjl4BAAAA&oh=18508ad5f7a94a0c49dc3eaf47607136&oe=629C6D2B" alt="Facebook Logo">Visit Our Facebook Page
+            Visit Our Facebook Page
         </a>
     </div>
     <script>
@@ -149,7 +129,7 @@
             } else {
                 circle.addEventListener('click', () => {
                     if (Object.keys(dateRecord).length === 6) {
-                        circle.innerHTML = '😮';
+                        circle.innerHTML = '🎉🥳';
                         circle.setAttribute('data-tooltip', 'Claim your Prize 1 Castor Oil');
                     }
                 });
@@ -162,14 +142,6 @@
                 circles[index].classList.add('active');
                 circles[index].setAttribute('data-tooltip', `Bought (${dateRecord[key]})`);
             });
-        }
-
-        function resetRecords() {
-            if (confirm('Are you sure you want to reset all records?')) {
-                localStorage.removeItem('dateRecord');
-                dateRecord = {};
-                updateCircles();
-            }
         }
     </script>
 </body>
