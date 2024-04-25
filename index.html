@@ -144,8 +144,11 @@
             } else {
                 circle.addEventListener('click', () => {
                     if (Object.keys(dateRecord).length === 6) {
-                        circle.innerHTML = '🎉🥳';
-                        circle.setAttribute('data-tooltip', 'Claim your Prize 1 Castor Oil');
+                        circle.innerHTML = '🥳';
+                        circle.setAttribute('data-tooltip', 'Congratulations! Claim your Prize');
+                    } else {
+                        circle.innerHTML = '😢';
+                        circle.setAttribute('data-tooltip', 'Complete all circles to claim prize');
                     }
                 });
             }
