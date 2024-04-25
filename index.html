@@ -112,21 +112,23 @@
     </div>
     <script>
         const circles = document.querySelectorAll('.loyalty-circle');
-        const dateRecord = JSON.parse(localStorage.getItem('dateRecord')) || {};
+        let dateRecord = JSON.parse(localStorage.getItem('dateRecord')) || {};
 
         updateCircles();
 
         circles.forEach((circle, index) => {
             if (index < 6) {
                 circle.addEventListener('click', () => {
-                    const password = prompt('Please enter the password to mark as bought:');
-                    if (password === 'your_password') { // Replace 'your_password' with your actual password
-                        circle.classList.add('active');
-                        circle.setAttribute('data-tooltip', `Bought (${getCurrentDate()})`);
-                        dateRecord[`circle-${index + 1}`] = getCurrentDate();
-                        localStorage.setItem('dateRecord', JSON.stringify(dateRecord));
-                    } else {
-                        alert('Incorrect password. You are not authorized to mark as bought.');
+                    if (!circle.classList.contains('active')) {
+                        const password = prompt('Please enter the password to mark as bought:');
+                        if (password === 'your_password') { // Replace 'your_password' with your actual password
+                            circle.classList.add('active');
+                            circle.setAttribute('data-tooltip', `Bought (${getCurrentDate()})`);
+                            dateRecord[`circle-${index + 1}`] = getCurrentDate();
+                            localStorage.setItem('dateRecord', JSON.stringify(dateRecord));
+                        } else {
+                            alert('Incorrect password. You are not authorized to mark as bought.');
+                        }
                     }
                 });
             } else {
