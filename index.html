@@ -48,14 +48,14 @@
             position: relative;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Emboss effect */
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5) inset; /* Emboss effect */
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Emboss effect */
         }
         .loyalty-circle.active {
             background-color: #ff69b4; /* Pink color when marked as "bought" */
         }
         .loyalty-circle:nth-child(n+2) {
             opacity: 1; /* Set opacity to fully visible */
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add shadow to increase visibility */
         }
         .loyalty-circle::after {
             content: attr(data-tooltip);
@@ -73,6 +73,9 @@
         }
         .loyalty-circle:hover::after {
             opacity: 1;
+        }
+        .loyalty-circle:hover {
+            transform: scale(1.1); /* Scale effect on hover */
         }
         .loyalty-card-title {
             margin-top: 20px;
