@@ -47,7 +47,7 @@
             color: #fff;
             position: relative;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Emboss effect */
         }
         .loyalty-circle.active {
@@ -68,10 +68,11 @@
             background-color: #fff;
             padding: 5px 10px;
             border-radius: 5px;
-            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         .loyalty-circle:hover::after {
-            display: block;
+            opacity: 1;
         }
         .loyalty-card-title {
             margin-top: 20px;
@@ -170,9 +171,12 @@
 
         function resetRecords() {
             if (confirm('Are you sure you want to reset all records?')) {
+                circles.forEach(circle => {
+                    circle.classList.remove('active');
+                    circle.innerHTML = parseInt(circle.id.replace('circle-', ''));
+                });
                 localStorage.removeItem('dateRecord');
                 dateRecord = {};
-                updateCircles();
             }
         }
     </script>
